@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Supply | Inmobiliaria y Consultoría en Japón</title>
+    
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconos de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Configuración de Tailwind CSS -->
+    <script>
+        tailwind = {
+            config: {
+                theme: {
+                    extend: {
+                        colors: {
+                            corporate: { light: '#3b82f6', DEFAULT: '#1e3a8a', dark: '#172554' },
+                            accent: { DEFAULT: '#d97706', hover: '#b45309' },
+                            japan: { red: '#bc002d', dark: '#1a1a1a' }
+                        },
+                        fontFamily: {
+                            sans: ['"Montserrat"', '"Noto Sans JP"', 'sans-serif'],
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        html { scroll-behavior: smooth; }
+
+        /* Clases para animación al revelar elementos (Scroll Reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Efecto de cristal para la barra de navegación */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Degradado de fondo sutil */
+        .bg-gradient-subtle {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        /* Selector de idiomas */
+        .lang-select {
+            appearance: none;
+            background-color: transparent;
+            padding: 0.25rem 1.5rem 0.25rem 0.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.25rem center;
+            background-size: 1em;
+            font-weight: 500;
+        }
+        .lang-select:focus { outline: none; border-color: #1e3a8a; ring: 2px; ring-color: #1e3a8a; }
+    </style>
+</head>
+<body class="font-sans text-gray-800 antialiased overflow-x-hidden">
+
+    <!-- Barra de Navegación -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 h-24 bg-white/95 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div class="flex justify-between items-center h-full">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-corporate rounded-lg flex items-center justify-center text-white">
+                        <i class="fa-solid fa-building-user text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-xl tracking-tight text-corporate-dark leading-none">UNIVERSAL SUPPLY</span>
+                        <span class="text-xs text-gray-500 tracking-widest uppercase mt-1">Real Estate & Consulting</span>
+                    </div>
+                </div>
+
+                <!-- Menú de Escritorio -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#inicio" class="text-gray-600 hover:text-corporate transition-colors font-medium text-sm uppercase tracking-wide" data-i18n="nav_home">Inicio</a>
+                    <a href="#nosotros" class="text-gray-600 hover:text-corporate transition-colors font-medium text-sm uppercase tracking-wide" data-i18n="nav_about">Nosotros</a>
+                    <a href="#servicios" class="text-gray-600 hover:text-corporate transition-colors font-medium text-sm uppercase tracking-wide" data-i18n="nav_services">Servicios</a>
+                    <a href="#contacto" class="text-gray-600 hover:text-corporate transition-colors font-medium text-sm uppercase tracking-wide" data-i18n="nav_contact">Contacto</a>
+                    
+                    <!-- Selector de Idioma Escritorio -->
+                    <select class="lang-select text-sm text-gray-700 bg-gray-50 ml-4 lang-switcher">
+                        <option value="es">🇪🇸 ES</option>
+                        <option value="en">🇬🇧 EN</option>
+                        <option value="ja">🇯🇵 JA</option>
+                    </select>
+                </div>
+
+                <!-- Botón Menú Móvil -->
+                <div class="md:hidden flex items-center gap-4">
+                    <select class="lang-select text-sm text-gray-700 bg-gray-50 lang-switcher">
+                        <option value="es">ES</option>
+                        <option value="en">EN</option>
+                        <option value="ja">JA</option>
+                    </select>
+                    
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-corporate focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-xl absolute w-full border-t border-gray-100">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#inicio" class="block px-3 py-4 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-corporate rounded-md uppercase tracking-wide" data-i18n="nav_home">Inicio</a>
+                <a href="#nosotros" class="block px-3 py-4 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-corporate rounded-md uppercase tracking-wide" data-i18n="nav_about">Nosotros</a>
+                <a href="#servicios" class="block px-3 py-4 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-corporate rounded-md uppercase tracking-wide" data-i18n="nav_services">Servicios</a>
+                <a href="#contacto" class="block px-3 py-4 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-corporate rounded-md uppercase tracking-wide" data-i18n="nav_contact">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Hero (Inicio) -->
+    <section id="inicio" class="relative min-h-[90vh] flex items-center justify-center pt-32 pb-24">
+        <!-- Imagen de fondo con overlay menos oscuro -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-black/40"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto reveal">
+            <span class="inline-block py-1 px-4 rounded-full bg-accent text-white font-semibold tracking-widest uppercase mb-8 text-sm shadow-md" data-i18n="hero_badge">Desde 1995 conectando culturas</span>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-2xl" data-i18n="hero_title">
+                Tu enlace seguro en el mercado japonés
+            </h1>
+            <p class="text-lg md:text-xl text-white mb-10 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-lg" data-i18n="hero_desc">
+                Servicios integrales de asesoramiento inmobiliario, soporte legal y consultoría de negocios. Superamos las barreras lingüísticas y culturales con total independencia y transparencia.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#servicios" class="bg-accent hover:bg-accent-hover text-white px-8 py-4 rounded-md font-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1" data-i18n="hero_btn_services">
+                    Descubrir Servicios
+                </a>
+                <a href="#nosotros" class="bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/40 text-white px-8 py-4 rounded-md font-medium transition-all shadow-lg transform hover:-translate-y-1" data-i18n="hero_btn_about">
+                    Conocer Universal Supply
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Nosotros -->
+    <section id="nosotros" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal relative">
+                    <!-- Decoración corporativa -->
+                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-blue-50 rounded-tl-3xl z-0"></div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 border-4 border-accent/20 rounded-br-3xl z-0"></div>
+                    
+                    <!-- Ilustración vectorial de alta calidad de una Casa Tradicional Japonesa para sustituir la fotografía -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" class="relative z-10 rounded-lg shadow-2xl w-full h-[550px] object-cover bg-[#f4f1ea] border border-gray-100">
+                        <!-- Canvas Background -->
+                        <rect width="800" height="550" fill="#f4f1ea"/>
+                        
+                        <!-- Sol naciente tenue de fondo -->
+                        <circle cx="620" cy="180" r="100" fill="#bc002d" opacity="0.08" />
+                        
+                        <!-- Silueta suave de montañas lejanas -->
+                        <path d="M 0,380 L 150,300 L 320,380 L 500,280 L 720,380 L 800,340 L 800,480 L 0,480 Z" fill="#e8e3d7" />
+
+                        <!-- Suelo del jardín -->
+                        <rect y="420" width="800" height="130" fill="#ded9ce"/>
+                        
+                        <!-- Camino de Piedras (Tobi-ishi) -->
+                        <ellipse cx="250" cy="480" rx="40" ry="15" fill="#c2bbb0" />
+                        <ellipse cx="320" cy="500" rx="35" ry="12" fill="#b1aaa0" />
+                        <ellipse cx="400" cy="490" rx="50" ry="15" fill="#c2bbb0" />
+                        <ellipse cx="490" cy="510" rx="45" ry="14" fill="#a39c92" />
+                        <ellipse cx="580" cy="495" rx="38" ry="12" fill="#b1aaa0" />
+                        
+                        <!-- Estructura de Madera de la Casa Tradicional -->
+                        <!-- Marco principal -->
+                        <rect x="180" y="240" width="440" height="200" fill="#422f25" rx="2" />
+                        <!-- Fondo interior de papel shoji -->
+                        <rect x="195" y="255" width="410" height="175" fill="#fdfbf7" />
+                        
+                        <!-- Paneles Correderas Shoji -->
+                        <!-- Panel 1 (Izquierda) -->
+                        <g transform="translate(205, 255)">
+                            <rect width="90" height="175" fill="#fcf9f2" stroke="#634839" stroke-width="4"/>
+                            <line x1="30" y1="0" x2="30" y2="175" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="60" y1="0" x2="60" y2="175" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="35" x2="90" y2="35" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="70" x2="90" y2="70" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="105" x2="90" y2="105" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="140" x2="90" y2="140" stroke="#a08070" stroke-width="1.5" />
+                        </g>
+                        
+                        <!-- Panel 2 (Centro Izquierda) -->
+                        <g transform="translate(300, 255)">
+                            <rect width="90" height="175" fill="#fcf9f2" stroke="#634839" stroke-width="4"/>
+                            <line x1="30" y1="0" x2="30" y2="175" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="60" y1="0" x2="60" y2="175" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="35" x2="90" y2="35" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="70" x2="90" y2="70" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="105" x2="90" y2="105" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="140" x2="90" y2="140" stroke="#a08070" stroke-width="1.5" />
+                            <!-- Zócalo de madera inferior -->
+                            <rect x="2" y="125" width="86" height="48" fill="#523c2f"/>
+                        </g>
+                        
+                        <!-- Panel 3 (Centro Derecha) -->
+                        <g transform="translate(410, 255)">
+                            <rect width="90" height="175" fill="#fcf9f2" stroke="#634839" stroke-width="4"/>
+                            <line x1="30" y1="0" x2="30" y2="175" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="60" y1="0" x2="60" y2="175" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="35" x2="90" y2="35" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="70" x2="90" y2="70" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="105" x2="90" y2="105" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="140" x2="90" y2="140" stroke="#a08070" stroke-width="1.5" />
+                            <rect x="2" y="125" width="86" height="48" fill="#523c2f"/>
+                        </g>
+
+                        <!-- Panel 4 (Derecha) -->
+                        <g transform="translate(505, 255)">
+                            <rect width="90" height="175" fill="#fcf9f2" stroke="#634839" stroke-width="4"/>
+                            <line x1="30" y1="0" x2="30" y2="175" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="60" y1="0" x2="60" y2="175" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="35" x2="90" y2="35" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="70" x2="90" y2="70" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="105" x2="90" y2="105" stroke="#a08070" stroke-width="1.5" />
+                            <line x1="0" y1="140" x2="90" y2="140" stroke="#a08070" stroke-width="1.5" />
+                        </g>
+                        
+                        <!-- Columnas de Soporte (Pillars) -->
+                        <rect x="180" y="240" width="18" height="200" fill="#302119" />
+                        <rect x="292" y="240" width="12" height="200" fill="#302119" />
+                        <rect x="397" y="240" width="16" height="200" fill="#3a271d" />
+                        <rect x="502" y="240" width="12" height="200" fill="#302119" />
+                        <rect x="602" y="240" width="18" height="200" fill="#302119" />
+                        
+                        <!-- Engawa (Porche corrido de madera) -->
+                        <rect x="150" y="420" width="500" height="15" fill="#523c2f" />
+                        <rect x="150" y="435" width="500" height="6" fill="#302119" />
+                        
+                        <!-- Farol colgante cálido (Chochin) -->
+                        <g transform="translate(415, 270)">
+                            <line x1="0" y1="0" x2="0" y2="20" stroke="#22120a" stroke-width="3" />
+                            <rect x="-15" y="20" width="30" height="40" fill="#fcd757" rx="8" stroke="#3a271d" stroke-width="3" />
+                            <ellipse cx="0" cy="40" rx="10" ry="15" fill="#ffffff" opacity="0.6" />
+                            <rect x="-18" y="17" width="36" height="5" fill="#22120a" rx="1" />
+                            <rect x="-18" y="58" width="36" height="5" fill="#22120a" rx="1" />
+                            <line x1="0" y1="63" x2="0" y2="75" stroke="#db3a34" stroke-width="3" />
+                        </g>
+                        
+                        <!-- Tejado Tradicional de Tejas (Kawara) -->
+                        <!-- Alero inferior -->
+                        <polygon points="120,250 680,250 650,230 150,230" fill="#1b1c1e" />
+                        <!-- Pendiente del tejado -->
+                        <polygon points="100,246 700,246 620,130 180,130" fill="#2c3539" />
+                        
+                        <!-- Líneas divisorias de las tejas -->
+                        <g stroke="#1b1c1e" stroke-width="4">
+                            <line x1="180" y1="130" x2="100" y2="246" />
+                            <line x1="220" y1="130" x2="155" y2="246" />
+                            <line x1="260" y1="130" x2="210" y2="246" />
+                            <line x1="300" y1="130" x2="265" y2="246" />
+                            <line x1="340" y1="130" x2="320" y2="246" />
+                            <line x1="380" y1="130" x2="375" y2="246" />
+                            <line x1="420" y1="130" x2="425" y2="246" />
+                            <line x1="460" y1="130" x2="480" y2="246" />
+                            <line x1="500" y1="130" x2="535" y2="246" />
+                            <line x1="540" y1="130" x2="590" y2="246" />
+                            <line x1="580" y1="130" x2="645" y2="246" />
+                            <line x1="620" y1="130" x2="700" y2="246" />
+                        </g>
+                        
+                        <!-- Viga de cumbrera superior (Mune) -->
+                        <rect x="170" y="118" width="460" height="15" fill="#1b1c1e" rx="3" />
+                        <!-- Onigawara (Detalles ornamentales en las esquinas del tejado) -->
+                        <path d="M 170,133 Q 160,110 180,115 Z" fill="#1b1c1e" />
+                        <path d="M 630,133 Q 640,110 620,115 Z" fill="#1b1c1e" />
+                        
+                        <!-- Arce Japonés (Momiji) en otoño (Lado derecho) -->
+                        <g transform="translate(640, 240)">
+                            <path d="M 40,240 Q 20,150 40,80 Q 20,40 -10,10" fill="none" stroke="#302119" stroke-width="12" stroke-linecap="round"/>
+                            <path d="M 32,140 Q 5,100 -20,80" fill="none" stroke="#302119" stroke-width="6" stroke-linecap="round"/>
+                            <!-- Follaje cálido -->
+                            <circle cx="-15" cy="15" r="45" fill="#b13434" opacity="0.9" />
+                            <circle cx="20" cy="5" r="40" fill="#d95d39" opacity="0.85" />
+                            <circle cx="50" cy="35" r="50" fill="#a02828" opacity="0.9" />
+                            <circle cx="35" cy="70" r="35" fill="#f19a3e" opacity="0.8" />
+                            <circle cx="-25" cy="75" r="35" fill="#b13434" opacity="0.85" />
+                        </g>
+                        
+                        <!-- Rama de Pino estilo Bonsái (Lado izquierdo) -->
+                        <g transform="translate(80, 260)">
+                            <path d="M -50,220 Q -10,180 30,150" fill="none" stroke="#302119" stroke-width="10" stroke-linecap="round" />
+                            <path d="M 30,150 Q 60,130 90,140" fill="none" stroke="#302119" stroke-width="6" stroke-linecap="round" />
+                            <ellipse cx="90" cy="135" rx="35" ry="18" fill="#1d4a34" />
+                            <ellipse cx="40" cy="145" rx="40" ry="20" fill="#143d29" />
+                            <ellipse cx="-10" cy="180" rx="45" ry="22" fill="#1d4a34" />
+                        </g>
+
+                        <!-- Farol tradicional de piedra del jardín (Toro) -->
+                        <g transform="translate(140, 390)">
+                            <polygon points="-15,70 15,70 10,50 -10,50" fill="#8a857c" />
+                            <rect x="-6" y="25" width="12" height="25" fill="#999389" />
+                            <polygon points="-20,25 20,25 15,17 -15,17" fill="#8a857c" />
+                            <rect x="-10" y="2" width="20" height="15" fill="#fdf4cd" stroke="#8a857c" stroke-width="2" />
+                            <rect x="-3" y="5" width="6" height="9" fill="#999389" />
+                            <polygon points="-25,2 25,2 18,-10 -18,-10" fill="#757067" />
+                            <circle cx="0" cy="-13" r="4" fill="#757067" />
+                        </g>
+                    </svg>
+                    
+                    <!-- Tarjeta flotante -->
+                    <div class="absolute bottom-10 -left-8 bg-white p-6 rounded-lg shadow-xl z-20 hidden md:block border-l-4 border-corporate">
+                        <div class="flex items-center gap-4">
+                            <i class="fa-solid fa-map-location-dot text-3xl text-corporate"></i>
+                            <div>
+                                <p class="font-bold text-gray-900" data-i18n="about_floating_title">Atención directa</p>
+                                <p class="text-sm text-gray-500" data-i18n="about_floating_desc">Desde Tokyo y Barcelona</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal">
+                    <span class="text-corporate font-bold tracking-wider uppercase text-sm mb-2 block" data-i18n="about_tag">Quiénes Somos</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight" data-i18n="about_title">Más de 25 años de independencia y confianza</h2>
+                    
+                    <p class="text-gray-600 mb-5 leading-relaxed" data-i18n="about_p1">
+                        Universal Supply comenzó su actividad en 1995. Desde entonces, actuamos como enlace entre propietarios japoneses y clientes extranjeros, resolviendo las dificultades derivadas de las barreras lingüísticas y culturales.
+                    </p>
+                    <p class="text-gray-600 mb-5 leading-relaxed" data-i18n="about_p2">
+                        La legislación japonesa impone restricciones a las agencias. Por ello, <strong>adoptamos una posición independiente</strong>. Esto nos permite ofrecer un apoyo flexible, investigando a fondo cada propiedad antes de la compra (riesgos sísmicos, termitas, historial legal) para proteger sus intereses.
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed border-l-4 border-accent pl-4 bg-orange-50 p-3 rounded-r-lg" data-i18n="about_p3">
+                        Nuestra representante reside en <strong>Barcelona, España</strong>. Ofrecemos atención presencial y en su idioma (Español/Inglés) para analizar proyectos inmobiliarios en Japón sin necesidad de desplazarse.
+                    </p>
+                    
+                    <!-- Cuadrícula de estadísticas ajustada a 3 columnas para acomodar la remoción del bloque independiente -->
+                    <div class="grid grid-cols-3 gap-6 text-center border-t border-gray-100 pt-8">
+                        <div>
+                            <div class="text-3xl font-bold text-corporate mb-1">1995</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wide font-semibold" data-i18n="stats_founded">Fundación</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-corporate mb-1"><i class="fa-solid fa-torii-gate"></i></div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wide font-semibold" data-i18n="stats_hq">Sede Japón</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-corporate mb-1">3</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wide font-semibold" data-i18n="stats_lang">Idiomas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Servicios -->
+    <section id="servicios" class="py-24 bg-gradient-subtle">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-accent font-bold tracking-wider uppercase text-sm" data-i18n="services_tag">Nuestras Áreas de Especialidad</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4" data-i18n="services_title">Soporte Integral en Japón</h2>
+                <p class="text-gray-600" data-i18n="services_desc">Ofrecemos asesoramiento realista y objetivo. No vendemos por vender; analizamos cada situación desde la perspectiva de sus intereses.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Servicio 1: Inmobiliario Extranjeros -->
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 reveal border border-gray-100 group">
+                    <div class="w-16 h-16 bg-blue-50 text-corporate rounded-lg flex items-center justify-center text-3xl mb-6 group-hover:bg-corporate group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-house-flag"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="srv_1_title">Búsqueda de Propiedades</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4 text-sm" data-i18n="srv_1_desc">
+                        Búsqueda y mediación para extranjeros en Japón. Nos comunicamos con las agencias locales, realizamos consultas y obtenemos información para facilitar la compra.
+                    </p>
+                </div>
+
+                <!-- Servicio 2: Inmobiliario Japoneses -->
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 reveal border border-gray-100 group delay-100">
+                    <div class="w-16 h-16 bg-blue-50 text-corporate rounded-lg flex items-center justify-center text-3xl mb-6 group-hover:bg-corporate group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-handshake-angle"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="srv_2_title">Apoyo a Propietarios</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4 text-sm" data-i18n="srv_2_desc">
+                        Ayudamos a propietarios japoneses que desean vender a extranjeros pero temen la barrera cultural. Coordinamos negociaciones seguras y tranquilas.
+                    </p>
+                </div>
+
+                <!-- Servicio 3: Due Diligence -->
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 reveal border border-gray-100 group delay-200">
+                    <div class="w-16 h-16 bg-blue-50 text-corporate rounded-lg flex items-center justify-center text-3xl mb-6 group-hover:bg-corporate group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="srv_3_title">Investigación Pre-Compra</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4 text-sm" data-i18n="srv_3_desc">
+                        Evaluamos el valor real, riesgos sísmicos, termitas, planes urbanísticos y legitimidad del vendedor (prevención de fraudes) antes de que tome una decisión.
+                    </p>
+                </div>
+
+                <!-- Servicio 4: Consultoría Negocios -->
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 reveal border border-gray-100 group">
+                    <div class="w-16 h-16 bg-orange-50 text-accent rounded-lg flex items-center justify-center text-3xl mb-6 group-hover:bg-accent group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="srv_4_title">Consultoría de Negocios</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4 text-sm" data-i18n="srv_4_desc">
+                        Consultoría experta y apoyo paso a paso para la apertura y registro de nuevas empresas en Japón.
+                    </p>
+                </div>
+
+                <!-- Servicio 5: Soporte Legal -->
+                <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 reveal border border-gray-100 group delay-100 md:col-span-2 lg:col-span-2">
+                    <div class="w-16 h-16 bg-orange-50 text-accent rounded-lg flex items-center justify-center text-3xl mb-6 group-hover:bg-accent group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="srv_5_title">Coordinación Legal (Shiho Shoshi & Gyosei Shoshi)</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4 text-sm" data-i18n="srv_5_desc">
+                        Le indicamos qué profesionales son realmente necesarios (ej. notarios judiciales para el registro) para evitar costes innecesarios. Facilitamos la comunicación con abogados y gestores, superando las barreras lingüísticas para asegurar transacciones conformes a la ley japonesa.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Buscador / Portales Inmobiliarios -->
+    <section id="buscador" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+                <span class="text-accent font-bold tracking-wider uppercase text-sm" data-i18n="portals_tag">Búsqueda Activa</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4" data-i18n="portals_title">Portales Inmobiliarios Recomendados</h2>
+                <p class="text-gray-600" data-i18n="portals_desc">Explora las plataformas líderes en Japón. Si encuentras una propiedad que te interesa, envíanos el enlace y nos encargaremos de investigar y contactar con la agencia local por ti.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Portal 1: SUUMO -->
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all reveal group">
+                    <div class="h-12 flex items-center mb-4">
+                        <span class="text-2xl font-black text-green-500 tracking-tighter">SUUMO</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-6 h-16" data-i18n="portal_1_desc">El portal inmobiliario más grande y popular de Japón. Extenso catálogo en japonés.</p>
+                    <a href="https://suumo.jp/" target="_blank" rel="noopener noreferrer" class="text-corporate font-semibold text-sm group-hover:text-corporate-dark flex items-center gap-2">
+                        <span data-i18n="portal_btn">Visitar Portal</span> <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Portal 2: HOMES -->
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all reveal group delay-100">
+                    <div class="h-12 flex items-center mb-4">
+                        <span class="text-2xl font-black text-orange-500 tracking-tighter">LIFULL HOME'S</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-6 h-16" data-i18n="portal_2_desc">Excelente alternativa con una enorme base de datos de propiedades en todo el país.</p>
+                    <a href="https://www.homes.co.jp/" target="_blank" rel="noopener noreferrer" class="text-corporate font-semibold text-sm group-hover:text-corporate-dark flex items-center gap-2">
+                        <span data-i18n="portal_btn">Visitar Portal</span> <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Portal 3: Real Estate Japan -->
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all reveal group delay-200">
+                    <div class="h-12 flex items-center mb-4">
+                        <span class="text-xl font-bold text-blue-600">Real Estate Japan</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-6 h-16" data-i18n="portal_3_desc">Portal multilingüe diseñado específicamente para extranjeros en Japón.</p>
+                    <a href="https://realestate.co.jp/" target="_blank" rel="noopener noreferrer" class="text-corporate font-semibold text-sm group-hover:text-corporate-dark flex items-center gap-2">
+                        <span data-i18n="portal_btn">Visitar Portal</span> <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: Asesoría Express de Anuncios -->
+    <section class="py-16 bg-white border-t border-b border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <div class="bg-gradient-to-r from-blue-50 to-slate-50 rounded-2xl p-8 md:p-12 shadow-md border border-blue-100/50 relative overflow-hidden">
+                <!-- Símbolo decorativo de fondo -->
+                <div class="absolute right-0 bottom-0 translate-x-1/4 translate-y-1/4 opacity-5 pointer-events-none">
+                    <i class="fa-solid fa-house-circle-check text-9xl"></i>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-6 relative z-10">
+                    <div class="w-14 h-14 bg-corporate text-white rounded-xl flex items-center justify-center text-2xl shadow-lg shrink-0">
+                        <i class="fa-solid fa-clipboard-question"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-3" data-i18n="express_title">¿Has visto un anuncio que te interesa?</h3>
+                        <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-4 md:mb-0" data-i18n="express_desc">
+                            Si tienes visto algún anuncio de una vivienda en Japón y quieres resolver dudas puedo dar mi asesoramiento, por ello cobramos 150€ por hora, este precio incluye contactar con el agente inmobiliario y resolver la duda que puedas tener.
+                        </p>
+                    </div>
+                    <div class="w-full md:w-auto shrink-0 pt-2 md:pt-0">
+                        <a href="#contacto" class="inline-block w-full text-center bg-accent hover:bg-accent-hover text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-md text-sm whitespace-nowrap" data-i18n="express_btn">
+                            Solicitar Asesoría
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer y Contacto -->
+    <footer id="contacto" class="bg-gray-50 pt-20 pb-10 text-gray-800 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16 reveal">
+                
+                <!-- Info de la Marca -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-corporate rounded-lg flex items-center justify-center text-white">
+                            <i class="fa-solid fa-building-user text-xl"></i>
+                        </div>
+                        <span class="font-bold text-2xl tracking-tight text-corporate-dark leading-none">UNIVERSAL SUPPLY</span>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed" data-i18n="footer_desc">
+                        Consultoría inmobiliaria y de negocios independiente. Protegemos sus intereses en Japón con total transparencia, eliminando barreras culturales.
+                    </p>
+                    
+                </div>
+
+                <!-- Datos de contacto -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-gray-900 border-b border-gray-300 pb-2 inline-block" data-i18n="footer_contact_title">Datos de contacto</h4>
+                    <ul class="space-y-4 text-gray-600 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-accent mt-1"></i>
+                            <div class="flex flex-col">
+                                <strong class="text-gray-800" data-i18n="footer_japan_office">Sede Japón</strong>
+                                <span data-i18n="footer_japan_address">Tokio, Japón</span>
+                            </div>
+                        </li>
+                         <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-accent"></i>
+                            <span>+090-3088-3119</span>
+                        </li>
+                         <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-accent"></i>
+                            <span>universalsupplyjp@gmail.com</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-brands fa-line text-green-500 text-lg"></i>
+                            <span>LINE ID: yukimalaga</span>
+                        </li>
+                        <!-- Enlace de LinkedIn Añadido -->
+                        <li class="flex items-center gap-3">
+                            <i class="fa-brands fa-linkedin text-[#0077b5] text-lg"></i>
+                            <a href="https://www.linkedin.com/in/yuki-mizutani-639b55345" target="_blank" rel="noopener noreferrer" class="hover:text-corporate transition-colors font-medium">
+                                LinkedIn: Yuki Mizutani
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-xs font-medium">
+                <p>&copy; Universal Supply. <span data-i18n="footer_rights">Todos los derechos reservados.</span></p>
+                <div class="mt-4 md:mt-0 space-x-6">
+                    <a href="#" class="hover:text-corporate transition-colors" data-i18n="footer_privacy">Política de Privacidad</a>
+                    <a href="#" class="hover:text-corporate transition-colors" data-i18n="footer_terms">Aviso Legal</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. DICCIONARIO DE TRADUCCIONES (i18n) ---
+        const translations = {
+            es: {
+                nav_home: "Inicio",
+                nav_about: "Nosotros",
+                nav_services: "Servicios",
+                nav_contact: "Contacto",
+                hero_badge: "Desde 1995 conectando culturas",
+                hero_title: "Tu enlace seguro en el mercado japonés",
+                hero_desc: "Servicios integrales de asesoramiento inmobiliario, soporte legal y consultoría de negocios. Superamos las barreras lingüísticas y culturales con total independencia y transparencia.",
+                hero_btn_services: "Descubrir Servicios",
+                hero_btn_about: "Conocer Universal Supply",
+                about_floating_title: "Atención directa",
+                about_floating_desc: "Desde Tokyo y Barcelona",
+                about_tag: "Quiénes Somos",
+                about_title: "Más de 25 años de independencia y confianza",
+                about_p1: "Universal Supply comenzó su actividad en 1995. Desde entonces, actuamos como enlace entre propietarios japoneses y clientes extranjeros, resolviendo las dificultades derivadas de las barreras lingüísticas y culturales.",
+                about_p2: "La legislación japonesa impone restricciones a las agencias. Por ello, adoptamos una posición independiente. Esto nos permite ofrecer un apoyo flexible, investigando a fondo cada propiedad antes de la compra (riesgos sísmicos, termitas, historial legal) para proteger sus intereses.",
+                about_p3: "Nuestra representante reside en Barcelona, España. Ofrecemos atención presencial y en su idioma (Español/Inglés) para analizar proyectos inmobiliarios en Japón sin necesidad de desplazarse.",
+                stats_founded: "Fundación",
+                stats_hq: "Sede Japón",
+                stats_lang: "Idiomas",
+                services_tag: "Nuestras Áreas de Especialidad",
+                services_title: "Soporte Integral en Japón",
+                services_desc: "Ofrecemos asesoramiento realista y objetivo. No vendemos por vender; analizamos cada situación desde la perspectiva de sus intereses.",
+                srv_1_title: "Búsqueda de Propiedades",
+                srv_1_desc: "Búsqueda y mediación para extranjeros en Japón. Nos comunicamos con las agencias locales, realizamos consultas y obtenemos información para facilitar el alquiler o compra.",
+                srv_2_title: "Apoyo a Propietarios",
+                srv_2_desc: "Ayudamos a propietarios japoneses que desean vender o alquilar a extranjeros pero temen la barrera cultural. Coordinamos negociaciones seguras y tranquilas.",
+                srv_3_title: "Investigación Pre-Compra",
+                srv_3_desc: "Evaluamos el valor real, riesgos sísmicos, termitas, planes urbanísticos y legitimidad del vendedor (prevención de fraudes) antes de que tome una decisión.",
+                
+                // Actualizado sin visados
+                srv_4_title: "Consultoría de Negocios",
+                srv_4_desc: "Consultoría experta y apoyo paso a paso para la apertura y registro de nuevas empresas en Japón.",
+                
+                srv_5_title: "Coordinación Legal",
+                srv_5_desc: "Le indicamos qué profesionales son realmente necesarios (ej. notarios judiciales) para evitar costes innecesarios. Facilitamos la comunicación con abogados y gestores.",
+                
+                // Nuevas traducciones para portales
+                portals_tag: "Búsqueda Activa",
+                portals_title: "Portales Inmobiliarios Recomendados",
+                portals_desc: "Explora las plataformas líderes en Japón. Si encuentras una propiedad que te interesa, envíanos el enlace y nos encargaremos de investigar y contactar con la agencia local por ti.",
+                portal_1_desc: "El portal inmobiliario más grande y popular de Japón. Extenso catálogo en japonés.",
+                portal_2_desc: "Excelente alternativa con una enorme base de datos de propiedades en todo el país.",
+                portal_3_desc: "Portal multilingüe diseñado específicamente para extranjeros en Japón.",
+                portal_btn: "Visitar Portal",
+
+                express_title: "¿Has visto un anuncio que te interesa?",
+                express_desc: "Si tienes visto algún anuncio de una vivienda en Japón y quieres resolver dudas puedo dar mi asesoramiento, por ello cobramos 150€ por hora. Este precio incluye contactar con el agente inmobiliario y resolver la duda que puedas tener.",
+                express_btn: "Solicitar Asesoría",
+                footer_desc: "Consultoría inmobiliaria y de negocios independiente. Protegemos sus intereses en Japón con total transparencia, eliminando barreras culturales.",
+                footer_contact_title: "Datos de contacto",
+                footer_japan_office: "Sede Japón",
+                footer_japan_address: "Tokio, Japón",
+                footer_spain_office: "Representación Europa",
+                footer_bcn_address: "Barcelona, España",
+                footer_rights: "Todos los derechos reservados.",
+                footer_privacy: "Política de Privacidad",
+                footer_terms: "Aviso Legal"
+            },
+            en: {
+                nav_home: "Home",
+                nav_about: "About Us",
+                nav_services: "Services",
+                nav_contact: "Contact",
+                hero_badge: "Connecting cultures since 1995",
+                hero_title: "Your secure link in the Japanese market",
+                hero_desc: "Comprehensive real estate advisory, legal support, and business consulting services. We overcome language and cultural barriers with total independence and transparency.",
+                hero_btn_services: "Discover Services",
+                hero_btn_about: "Know Universal Supply",
+                about_floating_title: "Direct Support",
+                about_floating_desc: "From Tokyo and Barcelona",
+                about_tag: "Who We Are",
+                about_title: "Over 25 years of independence and trust",
+                about_p1: "Universal Supply started its activity in 1995. Since then, we have acted as a liaison between Japanese owners and foreign clients, solving difficulties arising from language and cultural barriers.",
+                about_p2: "Japanese law imposes restrictions on agencies. Therefore, we adopt an independent position. This allows us to offer flexible support, thoroughly investigating each property before purchase (seismic risks, termites, legal history) to protect your interests.",
+                about_p3: "Our representative resides in Barcelona, Spain. We offer in-person assistance in your language (Spanish/English) to analyze real estate projects in Japan without the need to travel.",
+                stats_founded: "Founded",
+                stats_hq: "Japan HQ",
+                stats_lang: "Languages",
+                services_tag: "Our Areas of Expertise",
+                services_title: "Comprehensive Support in Japan",
+                services_desc: "We offer realistic and objective advice. We don't just sell to sell; we analyze every situation from the perspective of your best interests.",
+                srv_1_title: "Property Search",
+                srv_1_desc: "Search and mediation for foreigners in Japan. We communicate with local agencies, make inquiries, and obtain information to facilitate renting or buying.",
+                srv_2_title: "Support for Owners",
+                srv_2_desc: "We help Japanese owners who want to sell or rent to foreigners but fear the cultural barrier. We coordinate safe and smooth negotiations.",
+                srv_3_title: "Pre-Purchase Investigation",
+                srv_3_desc: "We evaluate real value, seismic risks, termites, urban plans, and seller legitimacy (fraud prevention) before you make a decision.",
+                
+                // Updated without visas
+                srv_4_title: "Business Consulting",
+                srv_4_desc: "Expert consulting and step-by-step support for opening and registering new companies in Japan.",
+                
+                srv_5_title: "Legal Coordination",
+                srv_5_desc: "We advise you on which professionals are actually necessary (e.g., judicial scriveners) to avoid unnecessary costs. We facilitate communication with lawyers and agents.",
+                
+                // New translations for portals
+                portals_tag: "Active Search",
+                portals_title: "Recommended Real Estate Portals",
+                portals_desc: "Explore Japan's leading platforms. If you find a property you're interested in, send us the link and we will investigate and contact the local agency for you.",
+                portal_1_desc: "Japan's largest and most popular real estate portal. Extensive catalog in Japanese.",
+                portal_2_desc: "Excellent alternative with a huge database of properties nationwide.",
+                portal_3_desc: "Multilingual portal designed specifically for foreigners in Japan.",
+                portal_btn: "Visit Portal",
+
+                express_title: "Have you seen a housing listing in Japan?",
+                express_desc: "If you have seen an advertisement for a home in Japan and want to solve doubts, I can offer my advice. For this, we charge €150 per hour. With this rate, we contact the real estate agent and clear any doubts you may have.",
+                express_btn: "Request Advice",
+                footer_desc: "Independent real estate and business consulting. We protect your interests in Japan with total transparency, eliminating cultural barriers.",
+                footer_contact_title: "Contact Information",
+                footer_japan_office: "Japan Office",
+                footer_japan_address: "Tokyo, Japan",
+                footer_spain_office: "Europe Representation",
+                footer_bcn_address: "Barcelona, Spain",
+                footer_rights: "All rights reserved.",
+                footer_privacy: "Privacy Policy",
+                footer_terms: "Legal Notice"
+            },
+            ja: {
+                nav_home: "ホーム",
+                nav_about: "企業情報",
+                nav_services: "サービス",
+                nav_contact: "お問い合わせ",
+                hero_badge: "1995年からの文化の架け橋",
+                hero_title: "日本市場における確かなリンク",
+                hero_desc: "総合的な不動産アドバイザリー、法的サポート、ビジネスコンサルティング。完全な独立性と透明性をもって、言語や文化の壁を乗り越えます。",
+                hero_btn_services: "サービスを見る",
+                hero_btn_about: "ユニバーサルサプライについて",
+                about_floating_title: "直接対応",
+                about_floating_desc: "東京とバルセロナから",
+                about_tag: "企業概要",
+                about_title: "25年以上の独立性と信頼",
+                about_p1: "ユニバーサルサプライは1995年に活動を開始しました。以来、日本のオーナー様と外国人クライアントの架け橋として、言語や文化の壁から生じる困難を解決してきました。",
+                about_p2: "日本の法律では不動産業者に制限があります。そのため、私たちは独立した立場をとっています。これにより、購入前に各物件を徹底的に調査（地震リスク、シロアリ、法的履歴など）し、お客様の利益を守る柔軟なサポートを提供できます。",
+                about_p3: "当社の代表はスペインのバルセロナに駐在しております。日本へ渡航することなく、母国語（スペイン語/英語）での対面サポートで日本の不動産プロジェクトを検討することが可能です。",
+                stats_founded: "設立",
+                stats_hq: "日本本社",
+                stats_lang: "対応言語",
+                services_tag: "専門分野",
+                services_title: "日本での総合サポート",
+                services_desc: "現実的で客観的なアドバイスを提供します。ただ売るだけでなく、常にお客様の利益の観点から状況を分析します。",
+                srv_1_title: "物件検索",
+                srv_1_desc: "日本に住む外国人のための物件探し。現地の不動産会社と連絡を取り、賃貸や購入を円滑に進めるための情報収集を行います。",
+                srv_2_title: "オーナー様サポート",
+                srv_2_desc: "外国人に売却や賃貸を希望しつつも、文化の壁に不安を感じている日本人オーナー様を支援します。安全でスムーズな交渉を調整します。",
+                srv_3_title: "購入前調査（デューデリジェンス）",
+                srv_3_desc: "決定を下す前に、適正価格、地震リスク、シロアリ、都市計画、売主の正当性（詐欺防止）を評価します。",
+                
+                // Updated without visas
+                srv_4_title: "ビジネス設立コンサルティング",
+                srv_4_desc: "日本での新会社や支店の設立・登記のためのステップバイステップの専門的なサポート。",
+                
+                srv_5_title: "法務コーディネート",
+                srv_5_desc: "不必要な費用を避けるため、実際に必要な専門家（司法書士など）をアドバイスします。弁護士や行政書士とのコミュニケーションを円滑にします。",
+                
+                // New translations for portals
+                portals_tag: "物件検索",
+                portals_title: "おすすめの不動産ポータルサイト",
+                portals_desc: "日本の主要なプラットフォームをご覧ください。気になる物件が見つかりましたら、リンクをお送りください。当社が代行して調査し、現地の不動産会社へ連絡いたします。",
+                portal_1_desc: "日本最大級 of 不動産情報ポータルサイト。豊富な物件数が特徴です。",
+                portal_2_desc: "全国 of 物件情報が満載の優れたプラットフォーム。",
+                portal_3_desc: "日本に住む外国人のために設計された多言語ポータルサイト。",
+                portal_btn: "サイトを見る",
+
+                express_title: "気になる不動産広告を見つけましたか？",
+                express_desc: "日本国内의住居広告を見かけて疑問点をクリアにしたい場合、個別のアドバイザリーサービスを提供いたします。相談料は1時間あたり150ユーロとなっており、現地不動業者へ直接問い合わせを行って疑問をスッキリ解決いたします。",
+                express_btn: "アドバイザリーを依頼する",
+                footer_desc: "独立系不動産・ビジネスコンサルティング。文化の壁を排除し、完全な透明性をもって日本におけるお客様의利益を守ります。",
+                footer_contact_title: "連絡先",
+                footer_japan_office: "日本本社",
+                footer_japan_address: "日本、東京",
+                footer_spain_office: "ヨーロッパ拠点",
+                footer_bcn_address: "スペイン・バルセロナ",
+                footer_rights: "無断複写・転載を禁じます。",
+                footer_privacy: "プライバシーポリシー",
+                footer_terms: "免責事項"
+            }
+        };
+
+        // --- 2. LÓGICA DE CAMBIO DE IDIOMA ---
+        function setLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    // Reemplazar saltos de línea con <br>
+                    element.innerHTML = translations[lang][key].replace(/\n/g, '<br>');
+                }
+            });
+
+            document.querySelectorAll('.lang-switcher').forEach(select => {
+                select.value = lang;
+            });
+
+            localStorage.setItem('universal_supply_lang', lang);
+            document.documentElement.lang = lang;
+        }
+
+        // --- 3. LÓGICA DE INTERFAZ Y EVENTOS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('universal_supply_lang') || 'es';
+            setLanguage(savedLang);
+
+            document.querySelectorAll('.lang-switcher').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    setLanguage(e.target.value);
+                });
+            });
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('glass-nav');
+                        navbar.classList.replace('h-24', 'h-20');
+                    } else {
+                        navbar.classList.remove('glass-nav');
+                        navbar.classList.replace('h-20', 'h-24');
+                    }
+                });
+            }
+
+            function reveal() {
+                const reveals = document.querySelectorAll('.reveal');
+                for (let i = 0; i < reveals.length; i++) {
+                    const windowHeight = window.innerHeight;
+                    const elementTop = reveals[i].getBoundingClientRect().top;
+                    const elementVisible = 100;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveals[i].classList.add('active');
+                    }
+                }
+            }
+            window.addEventListener('scroll', reveal);
+            reveal(); 
+        });
+    </script>
+</body>
+</html>
